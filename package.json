@@ -1,0 +1,13 @@
+{
+  "name": "autocrop",
+  "version": "1.0.0",
+  "description": "JPG & PNG autocroppe microservice",
+  "main": "autocrop.js",
+  "author": "John-Robert Yrjölä",
+  "license": "ISC",
+  "dependencies": {
+    "chokidar": "^3.3.0",
+    "dotenv": "^8.2.0",
+    "jimp": "^0.8.5"
+  }
+}
