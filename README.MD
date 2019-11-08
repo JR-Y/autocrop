@@ -3,3 +3,5 @@ Microservice to autocrop images in one folder to another folder
 - Add your own .env with DIR_TO_WATCH & DIR_TO_WRITE (see example file)
 - Compares mtime of possible cropped file & re-crops if newer file is submitted to DIR_TO_WATCH (allows for service restarts, with minimal resource utilization)
 - files formats supported .png & .jpg (case insensitive)
+- Uses https://www.npmjs.com/package/chokidar to track folder file changes
+- Uses https://www.npmjs.com/package/dotenv for .env file fetching
