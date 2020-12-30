@@ -104,7 +104,7 @@ function convert(pathToFile) {
             workListInprogress = workListInprogress.filter(val => val !== pathToFile);
             console.log(workList.length)
         }).catch(function (err) {
-            console.error({file:pathToFile,error:err});
+            console.error({ file: pathToFile, error: err });
             workList = workList.filter(val => val !== pathToFile);
             workListInprogress = workListInprogress.filter(val => val !== pathToFile);
         });
@@ -120,10 +120,13 @@ function convert(pathToFile) {
 
 log("Watch started");
 let cropWatcher = chokidar.watch(dirToWatch, {
-    ignored: /[\/\\]\./, persistent: true,
+    ignored: /[\/\\]\./,
+    persistent: true,
     awaitWriteFinish: true,
-    ignored: '*.db',
-    usePolling: true
+    ignoreInitial: true,
+    usePolling: true,
+    interval: 200,
+    depth: 0
 });
 
 
@@ -140,20 +143,20 @@ function convertTimerTask() {
 setInterval(convertTimerTask, 20000);
 
 if (dirToWatch && dirToWrite) {
-cropWatcher
-    .on('error', error => log(`Watcher error: ${error}`))
-    .on('add', function (pathToFile) {
-        let ext = path.extname(pathToFile);
-        if (filesToConvert.includes(ext.toUpperCase())) {
-            checkIfConvert(pathToFile)
-        }
-    })
-    .on('change', function (pathToFile) {
-        let ext = path.extname(pathToFile);
-        if (filesToConvert.includes(ext.toUpperCase())) {
-            checkIfConvert(pathToFile)
-        }
-    });
+    cropWatcher
+        .on('error', error => log(`Watcher error: ${error}`))
+        .on('add', function (pathToFile) {
+            let ext = path.extname(pathToFile);
+            if (filesToConvert.includes(ext.toUpperCase())) {
+                checkIfConvert(pathToFile)
+            }
+        })
+        .on('change', function (pathToFile) {
+            let ext = path.extname(pathToFile);
+            if (filesToConvert.includes(ext.toUpperCase())) {
+                checkIfConvert(pathToFile)
+            }
+        });
 } else {
     console.error("No environment variable provided, DIR_TO_WRITE & DIR_TO_WATCH")
 }
